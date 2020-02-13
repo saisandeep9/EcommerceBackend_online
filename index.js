@@ -29,7 +29,7 @@ app.use("/api", productrouter);
 app.use("/api", usersrouter);
 app.use("/api", authrouther);
 
-const port = 3900;
+const port = process.env.PORT || 3900;
 const server = app.listen(port, () => console.log(`listening to port ${port}`));
 
 module.exports = server;
