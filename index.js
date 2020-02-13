@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+const config = require("config");
 // const config = require("config");
 const bodyparser = require("body-parser");
 
@@ -14,7 +15,7 @@ const usersrouter = require("./routes/users");
 const authrouther = require("./routes/auth");
 //connecting to the Data base
 mongoose
-  .connect("mongodb://localhost/ecommerce_online")
+  .connect(config.get("db.host"))
   .then(console.log("`Successfully connected to mongodb host"))
   .catch(err => console.log("faile to connect to db...", err));
 
@@ -28,5 +29,7 @@ app.use("/api", productrouter);
 app.use("/api", usersrouter);
 app.use("/api", authrouther);
 
-const port = 3000;
-app.listen(port, () => console.log(`listening to port ${port}`));
+const port = 3900;
+const server = app.listen(port, () => console.log(`listening to port ${port}`));
+
+module.exports = server;

@@ -1,0 +1,5 @@
+{
+  "db": {
+    "host": "mongodb://localhost/ecommerce_online"
+  }
+}
