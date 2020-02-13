@@ -1,0 +1,5 @@
+{
+  "db": {
+    "host": "mongodb+srv://sandeep9:sandeep317@e-commerce-4fq2m.mongodb.net/ecommerce_online?retryWrites=true&w=majority"
+  }
+}
