@@ -21,7 +21,7 @@ const { Product, validate } = require("../models/products");
 // const upload = multer({ storage: storage });
 
 // posting products
-app.post("/products", auth, async (req, res) => {
+app.post("/products", async (req, res) => {
   //   const { error } = validate(req.body);
 
   const result = validate(req.body);
@@ -41,6 +41,11 @@ app.post("/products", auth, async (req, res) => {
   //     console.log(error);
   //     res.status(500).json({ error: "Invalid Product Details" });
   //   }
+});
+
+app.get("/products", async (req, res) => {
+  const product = await Product.find();
+  res.status(200).send(product);
 });
 
 module.exports = app;

@@ -15,7 +15,12 @@ app.get("/me", auth, async (req, res) => {
   res.send(user);
 });
 
-app.post("/users", async (req, res) => {
+app.get("/allusers", async (req, res) => {
+  const user = await Users.find();
+  res.send(user);
+});
+
+app.post("/user", async (req, res) => {
   const result = validate(req.body);
   if (result.error) return res.send(result.error.details[0].message);
 

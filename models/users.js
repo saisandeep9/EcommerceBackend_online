@@ -12,7 +12,6 @@ const UsersSchema = new mongoose.Schema({
   },
   "e-mail": {
     type: String,
-
     minlength: 5,
     maxlength: 50,
     required: true,
@@ -20,7 +19,6 @@ const UsersSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-
     minlength: 5,
     maxlength: 350,
     required: true
