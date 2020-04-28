@@ -10,7 +10,12 @@ const bodyparser = require("body-parser");
 //   process.exit(1);
 // }
 
-app.use(function(req, res, next) {
+//add a middle ware to convert your json bodycle
+app.use(express.json());
+
+// app.use(bodyparser.json());
+
+app.use(function (req, res, next) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
     "Access-Control-Allow-Methods",
@@ -28,21 +33,19 @@ app.use(function(req, res, next) {
 });
 
 //Routers is added
+const categories = require("./routes/categories");
 const productrouter = require("./routes/products");
 const usersrouter = require("./routes/users");
 const authrouther = require("./routes/auth");
+
 //connecting to the Data base
 mongoose
   .connect(config.get("db.host"))
   .then(console.log("`Successfully connected to mongodb host"))
-  .catch(err => console.log("faile to connect to db...", err));
-
-//add a middle ware to convert your json bodycle
-app.use(express.json());
-
-// app.use(bodyparser.json());
+  .catch((err) => console.log("faile to connect to db...", err));
 
 //configuration the files
+app.use("/api", categories);
 app.use("/api", productrouter);
 app.use("/api", usersrouter);
 app.use("/api", authrouther);

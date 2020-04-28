@@ -8,24 +8,24 @@ const UsersSchema = new mongoose.Schema({
     type: String,
     minlength: 5,
     maxlength: 50,
-    required: true
+    required: true,
   },
   "e-mail": {
     type: String,
     minlength: 5,
     maxlength: 50,
     required: true,
-    unique: true
+    unique: true,
   },
   password: {
     type: String,
     minlength: 5,
     maxlength: 350,
-    required: true
-  }
+    required: true,
+  },
 });
 
-UsersSchema.methods.generateAuthToken = function() {
+UsersSchema.methods.generateAuthToken = function () {
   const token = jwt.sign({ _id: this._id }, "jwtkey");
   return token;
 };
@@ -33,21 +33,11 @@ UsersSchema.methods.generateAuthToken = function() {
 const Users = mongoose.model("Users", UsersSchema);
 function validate(Users) {
   const schema = {
-    name: Joi.string()
-      .min(5)
-      .max(50)
-      .required(),
-    "e-mail": Joi.string()
-      .min(5)
-      .max(50)
-      .required()
-      .email(),
-    password: Joi.string()
-      .min(5)
-      .max(350)
-      .required(),
+    name: Joi.string().min(5).max(50).required(),
+    "e-mail": Joi.string().min(5).max(50).required().email(),
+    password: Joi.string().min(5).max(350).required(),
 
-    description: Joi.string()
+    description: Joi.string(),
   };
   return Joi.validate(Users, schema);
 }
