@@ -5,7 +5,7 @@ const { Category } = require("../models/categories");
 // const Category = require("../models/categories");
 
 app.get("/categorys", async (req, res) => {
-  const categories = await Category.find();
+  const categories = await Category.find().sort("name");
   res.send(categories);
 });
 

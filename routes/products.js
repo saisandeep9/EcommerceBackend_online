@@ -32,7 +32,8 @@ app.post("/products", async (req, res) => {
     name: req.body.name,
     price: req.body.price,
     // entryDate:req.body,
-    description: req.body.description
+    description: req.body.description,
+    category: req.body.category,
   });
   await product.save();
   res.send(product);
@@ -44,7 +45,7 @@ app.post("/products", async (req, res) => {
 });
 
 app.get("/products", async (req, res) => {
-  const product = await Product.find();
+  const product = await Product.find().populate("Category", "name -_id");
   res.status(200).send(product);
 });
 
