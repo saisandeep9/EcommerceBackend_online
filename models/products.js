@@ -12,8 +12,9 @@ const ProductSchema = new mongoose.Schema({
   },
   price: {
     type: Number,
+    required: true,
   },
-  entryDate: { type: Date, default: Date.now },
+  // entryDate: { type: Date, default: Date.now },
   description: String,
 
   category: {
@@ -27,8 +28,8 @@ function validate(Product) {
   const schema = {
     name: Joi.string().min(5).max(50).required(),
     price: Joi.number().required(),
-    entryDate: Joi.date(),
-    description: Joi.string(),
+    entryDate: Joi.date().required(),
+    description: Joi.string().required(),
   };
   return Joi.validate(Product, schema);
 }
