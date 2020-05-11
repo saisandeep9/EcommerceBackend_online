@@ -3,8 +3,9 @@ const app = express();
 const mongoose = require("mongoose");
 const config = require("config");
 // const config = require("config");
-const bodyparser = require("body-parser");
+const bodyParser = require("body-parser");
 const cors = require("cors");
+const helmet = require("helmet");
 require("express-async-errors");
 
 // if (!config.get("jwtPrivateKey")) {
@@ -13,10 +14,13 @@ require("express-async-errors");
 // }
 
 //add a middle ware to convert your json bodycle
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
-
-app.use(bodyparser.json());
+app.use(helmet());
+app.use(express.static("public"));
+// app.use(express.urlencoded({ extended: true }));
 
 // app.use(function (req, res, next) {
 //   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -45,7 +49,7 @@ const error = require("./middleware/error");
 
 //connecting to the Data base
 mongoose
-  .connect(config.get("db.host"))
+  .connect(config.get("db.host"), { useNewUrlParser: true })
   .then(console.log("`Successfully connected to mongodb host"))
   .catch((err) => console.log("faile to connect to db...", err));
 
@@ -54,6 +58,14 @@ app.use("/api", categories);
 app.use("/api", productrouter);
 app.use("/api", usersrouter);
 app.use("/api", authrouther);
+
+process.on("uncaughtException", (ex) => {
+  logger.error("uncaughtException occured :", ex);
+});
+
+process.on("unhandledRejection", (ex) => {
+  logger.error("unhandledRejection occured :", ex);
+});
 
 app.use(error);
 

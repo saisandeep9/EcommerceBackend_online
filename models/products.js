@@ -21,6 +21,7 @@ const ProductSchema = new mongoose.Schema({
     type: Schema.Types.ObjectId,
     ref: "Category",
   },
+  pimg: String,
 });
 
 const Product = mongoose.model("Product", ProductSchema);
@@ -28,8 +29,8 @@ function validate(Product) {
   const schema = {
     name: Joi.string().min(5).max(50).required(),
     price: Joi.number().required(),
-    entryDate: Joi.date().required(),
-    description: Joi.string().required(),
+    // entryDate: Joi.date(),
+    description: Joi.string(),
   };
   return Joi.validate(Product, schema);
 }

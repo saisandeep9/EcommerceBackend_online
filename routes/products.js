@@ -27,7 +27,7 @@ app.post(
   "/products",
   // upload.single("pimg"),
   async (req, res) => {
-    //   const { error } = validate(req.body);
+    // const { error } = validate(req.body);
 
     const result = validate(req.body);
     if (result.error)
