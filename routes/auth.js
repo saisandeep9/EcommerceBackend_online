@@ -5,7 +5,7 @@ const _ = require("lodash");
 const bcrypt = require("bcrypt");
 
 // const router = express.Router();
-const { Users } = require("../models/users");
+const { Users } = require("../models/user");
 // const validate = require("../models/users");
 
 // posting users
@@ -33,14 +33,8 @@ app.post("/auth", async (req, res) => {
 
 function validate(req) {
   const schema = {
-    "e-mail": Joi.string()
-      .min(5)
-      .max(50)
-      .required(),
-    password: Joi.string()
-      .min(5)
-      .max(350)
-      .required()
+    "e-mail": Joi.string().min(5).max(50).required(),
+    password: Joi.string().min(5).max(350).required(),
   };
   return Joi.validate(req, schema);
 }

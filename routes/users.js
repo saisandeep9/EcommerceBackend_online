@@ -3,30 +3,31 @@ const app = express();
 const _ = require("lodash");
 const bcrypt = require("bcrypt");
 const auth = require("../middleware/auth");
-
+const jwt = require("jsonwebtoken");
+const config = require("config");
 // const router = express.Router();
-const { Users, validate } = require("../models/users");
+const { User, validate } = require("../models/user");
 // const validate = require("../models/users");
 
 // posting users
 
 app.get("/me", auth, async (req, res) => {
-  const user = await Users.findById(req.user._id).select("-password");
+  const user = await User.findById(req.user._id).select("-password");
   res.send(user);
 });
 
 app.get("/allusers", async (req, res) => {
-  const user = await Users.find();
+  const user = await User.find();
   res.send(user);
 });
 
-app.post("/user", async (req, res) => {
-  const result = validate(req.body);
-  if (result.error) return res.send(result.error.details[0].message);
+app.post("/users", async (req, res) => {
+  const { error } = validate(req.body);
+  if (error) return res.status(400).send(error.details[0].message);
 
-  let user = await Users.findOne({ "e-mail": req.body["e-mail"] });
+  let user = await User.findOne({ "e-mail": req.body["e-mail"] });
   if (user) return res.send("user already exist");
-  user = await new Users(_.pick(req.body, ["name", "e-mail"]));
+  user = await new User(_.pick(req.body, ["name", "e-mail"]));
 
   //Hash the password
 

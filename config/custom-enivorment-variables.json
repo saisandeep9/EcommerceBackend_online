@@ -1,4 +1,6 @@
 {
+  "jwtPrivateKey": "jwtPrivateKey",
+
   "db": {
     "host": "ecommerce_online_db"
   }

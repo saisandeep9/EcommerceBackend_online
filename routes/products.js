@@ -9,7 +9,7 @@ const upload = require("../middleware/upload");
 // const router = express.Router();
 const app = express();
 
-const { Product, validate } = require("../models/products");
+const { Product, validate } = require("../models/product");
 
 // const storage = multer.diskStorage({
 //   destination: function(req, fil, cb) {

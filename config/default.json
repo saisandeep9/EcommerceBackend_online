@@ -1,5 +1,4 @@
 {
-  "db": {
-    "host": "mongodb://localhost/ecommerce_online"
-  }
+  "jwtPrivateKey": "jwtPrivateKey",
+  "db": "mongodb://localhost/ecommerce_online"
 }
