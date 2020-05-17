@@ -2,20 +2,18 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const config = require("config");
+const compression = require("compression");
 
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const helmet = require("helmet");
 require("express-async-errors");
 
-// if (!config.get("jwtPrivateKey")) {
-//   console.error("jwt Private key is not defind");
-//   process.exit(1);
-// }
-
 //add a middle ware to convert your json bodycle
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({ extended: true }));
+
+// app.use(express.urlencoded({ extended: true }));
 const corsOptions = {
   exposedHeaders: "x-auth-token",
 };
@@ -23,8 +21,13 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 app.use(helmet());
+// app.use(compression());
 app.use(express.static("public"));
-// app.use(express.urlencoded({ extended: true }));
+
+// if (!config.get("jwtPrivateKey")) {
+//   console.error("jwt Private key is not defind");
+//   process.exit(1);
+// }
 
 // app.use(function (req, res, next) {
 //   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -66,13 +69,13 @@ app.use("/api", users);
 app.use("/api", auth);
 app.use(error);
 
-process.on("uncaughtException", (ex) => {
-  logger.error("uncaughtException occured :", ex);
-});
+// process.on("uncaughtException", (ex) => {
+//   logger.error("uncaughtException occured :", ex);
+// });
 
-process.on("unhandledRejection", (ex) => {
-  logger.error("unhandledRejection occured :", ex);
-});
+// process.on("unhandledRejection", (ex) => {
+//   logger.error("unhandledRejection occured :", ex);
+// });
 
 const port = process.env.PORT || 3900;
 const server = app.listen(port, () => console.log(`listening to port ${port}`));
