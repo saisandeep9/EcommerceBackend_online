@@ -5,15 +5,15 @@ const _ = require("lodash");
 const bcrypt = require("bcrypt");
 
 // const router = express.Router();
-const { Users } = require("../models/user");
+const { User } = require("../models/user");
 // const validate = require("../models/users");
 
 // posting users
 app.post("/auth", async (req, res) => {
-  const result = validate(req.body);
-  if (result.error) return res.send(result.error.details[0].message);
+  const { error } = validate(req.body);
+  if (error) return res.status.send(error.details[0].message);
 
-  let user = await Users.findOne({ "e-mail": req.body["e-mail"] });
+  let user = await User.findOne({ "e-mail": req.body["e-mail"] });
   if (!user) return res.status(400).send("Invalid email or password");
 
   //Hash the password
@@ -26,9 +26,9 @@ app.post("/auth", async (req, res) => {
     return res.status(400).send("Invalid password. please try again");
 
   const token = user.generateAuthToken();
-  res.send(token);
+  // res.send(token);
   // res.send(true);
-  // res.header("x-auth-token", token).send(ures);
+  res.header("x-auth-token", token).send(_.pick(user, ["name", "e-mail"]));
 });
 
 function validate(req) {

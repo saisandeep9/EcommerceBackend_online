@@ -3,8 +3,9 @@ const app = express();
 const _ = require("lodash");
 const bcrypt = require("bcrypt");
 const auth = require("../middleware/auth");
-const jwt = require("jsonwebtoken");
+
 const config = require("config");
+
 // const router = express.Router();
 const { User, validate } = require("../models/user");
 // const validate = require("../models/users");
@@ -16,12 +17,12 @@ app.get("/me", auth, async (req, res) => {
   res.send(user);
 });
 
-app.get("/allusers", async (req, res) => {
+app.get("/users", async (req, res) => {
   const user = await User.find();
   res.send(user);
 });
 
-app.post("/users", async (req, res) => {
+app.post("/users", auth, async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -31,7 +32,7 @@ app.post("/users", async (req, res) => {
 
   //Hash the password
 
-  const salt = await bcrypt.genSalt(9);
+  const salt = await bcrypt.genSalt(config.get("salt_to_password"));
   user.password = await bcrypt.hash(req.body.password, salt);
   await user.save();
   // res.send(user);

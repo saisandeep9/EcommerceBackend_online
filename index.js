@@ -50,7 +50,9 @@ const error = require("./middleware/error");
 //connecting to the Data base
 mongoose
   .connect(config.get("db"), { useNewUrlParser: true })
-  .then(console.log("Successfully connected to mongodb host"))
+  .then(
+    console.log(`Successfully connected to mongodb host${config.get("db")}`)
+  )
   .catch((err) => console.log("faile to connect to db...", err));
 
 //configuration the files

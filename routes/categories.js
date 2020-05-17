@@ -4,12 +4,12 @@ const app = express();
 const { Category } = require("../models/categories");
 // const Category = require("../models/categories");
 
-app.get("/categorys", async (req, res) => {
+app.get("/categories", async (req, res) => {
   const categories = await Category.find().sort("name");
   res.send(categories);
 });
 
-app.post("/categorys", async (req, res) => {
+app.post("/categories", async (req, res) => {
   const category = await new Category({
     name: req.body.name,
   });

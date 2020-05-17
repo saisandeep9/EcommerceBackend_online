@@ -1,5 +1,5 @@
 {
   "jwtPrivateKey": "jwtPrivateKey",
-  "db": "mongodb://localhost/ecommerce_online",
+  "db": "mongodb://localhost/ecommerce_online-test",
   "salt_to_password": 9
 }
