@@ -16,8 +16,12 @@ require("express-async-errors");
 //add a middle ware to convert your json bodycle
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({ extended: true }));
+const corsOptions = {
+  exposedHeaders: "x-auth-token",
+};
+app.use(cors(corsOptions));
 app.use(express.json());
-app.use(cors());
+
 app.use(helmet());
 app.use(express.static("public"));
 // app.use(express.urlencoded({ extended: true }));
@@ -60,7 +64,7 @@ app.use("/api", categories);
 app.use("/api", products);
 app.use("/api", users);
 app.use("/api", auth);
-// app.use(error);
+app.use(error);
 
 process.on("uncaughtException", (ex) => {
   logger.error("uncaughtException occured :", ex);

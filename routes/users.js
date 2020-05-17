@@ -17,18 +17,18 @@ app.get("/me", auth, async (req, res) => {
   res.send(user);
 });
 
-app.get("/users", async (req, res) => {
+app.get("/users", auth, async (req, res) => {
   const user = await User.find();
   res.send(user);
 });
 
-app.post("/users", auth, async (req, res) => {
+app.post("/users", async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
-  let user = await User.findOne({ "e-mail": req.body["e-mail"] });
+  let user = await User.findOne({ email: req.body.email });
   if (user) return res.send("user already exist");
-  user = await new User(_.pick(req.body, ["name", "e-mail"]));
+  user = await new User(_.pick(req.body, ["name", "email"]));
 
   //Hash the password
 
@@ -38,7 +38,7 @@ app.post("/users", auth, async (req, res) => {
   // res.send(user);
 
   const token = user.generateAuthToken();
-  res.header("x-auth-token", token).send(_.pick(user, ["name", "e-mail"]));
+  res.header("x-auth-token", token).send(_.pick(user, ["name", "email"]));
 });
 
 module.exports = app;

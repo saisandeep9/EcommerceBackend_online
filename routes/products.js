@@ -25,6 +25,7 @@ const { Product, validate } = require("../models/product");
 // posting products
 app.post(
   "/products",
+  auth,
   // upload.single("pimg"),
   async (req, res) => {
     // const { error } = validate(req.body);
@@ -51,7 +52,7 @@ app.post(
   }
 );
 
-app.get("/products", async (req, res) => {
+app.get("/products", auth, async (req, res) => {
   const product = await Product.find().populate("Category", "name -_id");
   res.status(200).send(product);
 });

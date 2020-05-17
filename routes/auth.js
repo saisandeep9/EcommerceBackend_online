@@ -11,9 +11,9 @@ const { User } = require("../models/user");
 // posting users
 app.post("/auth", async (req, res) => {
   const { error } = validate(req.body);
-  if (error) return res.status.send(error.details[0].message);
+  if (error) return res.status(400).send(error.details[0].message);
 
-  let user = await User.findOne({ "e-mail": req.body["e-mail"] });
+  let user = await User.findOne({ email: req.body.email });
   if (!user) return res.status(400).send("Invalid email or password");
 
   //Hash the password
@@ -28,12 +28,12 @@ app.post("/auth", async (req, res) => {
   const token = user.generateAuthToken();
   // res.send(token);
   // res.send(true);
-  res.header("x-auth-token", token).send(_.pick(user, ["name", "e-mail"]));
+  res.header("x-auth-token", token).send(_.pick(user, ["name", "email"]));
 });
 
 function validate(req) {
   const schema = {
-    "e-mail": Joi.string().min(5).max(50).required(),
+    email: Joi.string().min(5).max(50).required(),
     password: Joi.string().min(5).max(350).required(),
   };
   return Joi.validate(req, schema);
