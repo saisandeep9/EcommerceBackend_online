@@ -28,7 +28,7 @@ app.post("/users", async (req, res) => {
 
   let user = await User.findOne({ email: req.body.email });
   if (user) return res.send("user already exist");
-  user = await new User(_.pick(req.body, ["name", "email"]));
+  user = await new User(_.pick(req.body, ["name", "email", "gender"]));
 
   //Hash the password
 

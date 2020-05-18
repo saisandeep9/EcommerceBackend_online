@@ -67,7 +67,7 @@ app.use("/api", categories);
 app.use("/api", products);
 app.use("/api", users);
 app.use("/api", auth);
-app.use(error);
+// app.use(error);
 
 // process.on("uncaughtException", (ex) => {
 //   logger.error("uncaughtException occured :", ex);
